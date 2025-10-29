@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node src/server.js",
     "start": "node src/server.js",
+    "postinstall": "npx prisma generate"
     "bundle": "npx @redocly/cli bundle docs/openapi.yaml -o public/bundled.yaml",
     "prisma:generate": "npx prisma generate",
     "migrate:dev": "npx prisma migrate dev --name init",
