@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Task API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+  - url: https://your-render-url.onrender.com
+paths:
+  /tasks:
+    get:
+      tags: [Tasks]
+      summary: List tasks
+      responses:
+        "200":
+          description: A list of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+  /tasks/{id}:
+    get:
+      tags: [Tasks]
+      summary: Get a single task by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+          description: The ID of the task
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "400":
+          description: Invalid ID format
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+        "404":
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        title: { type: string, example: Buy groceries }
+        completed: { type: boolean, example: false }
+      required: [id, title, completed]
+    ValidationError:
+      type: object
+      properties:
+        error: { type: string, example: Validation failed }
+        details:
+          type: array
+          items: { type: string }
+          example: ["ID must be a number"]
+      required: [error, details]
+    NotFoundError:
+      type: object
+      properties:
+        error: { type: string, example: Task not found }
+      required: [error]

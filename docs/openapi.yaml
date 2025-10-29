@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: Task API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development
+  - url: https://your-render-url.onrender.com
+    description: Deployed server
+tags:
+  - name: Tasks
+    description: Task-related endpoints
+paths:
+  /tasks:
+    $ref: paths/tasks.yaml#/tasks
+  /tasks/{id}:
+    $ref: paths/taskById.yaml#/taskById
+components:
+  schemas:
+    Task:
+      $ref: components/schemas/Task.yaml
+    ValidationError:
+      $ref: components/schemas/ValidationError.yaml
+    NotFoundError:
+      $ref: components/schemas/NotFoundError.yaml
